@@ -114,7 +114,7 @@ export async function saveInterviewQuestions(
 
   // Set a limit (e.g., max 5 interviews per user)
   const MAX_INTERVIEWS = env.MAX_INTERVIEWS_PER_USER;
-  if (userInterviews >= MAX_INTERVIEWS) {
+  if (userInterviews >= Number(MAX_INTERVIEWS)) {
     throw new Error("Interview limit reached. Please delete old interviews.");
   }
 

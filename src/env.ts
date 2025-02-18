@@ -16,14 +16,8 @@ export const env = createEnv({
     GEMINI_API_KEY: z.string().min(1),
     STRIPE_SECRET_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
-    NUMBER_OF_QUESTIONS: z.preprocess(
-      (val) => Number(val),
-      z.number().int().positive(),
-    ),
-    MAX_INTERVIEWS_PER_USER: z.preprocess(
-      (val) => Number(val),
-      z.number().int().positive(),
-    ),
+    NUMBER_OF_QUESTIONS: z.string().min(1),
+    MAX_INTERVIEWS_PER_USER: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
