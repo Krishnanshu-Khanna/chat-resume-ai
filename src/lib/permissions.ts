@@ -22,3 +22,7 @@ export function canUseAITools(subscriptionLevel: SubscriptionLevel) {
 export function canUseCustomizations(subscriptionLevel: SubscriptionLevel) {
   return subscriptionLevel === "pro_plus";
 }
+
+export function canInterviewScheduler(subscriptionLevel: SubscriptionLevel) {
+  return subscriptionLevel === "pro_plus";
+}

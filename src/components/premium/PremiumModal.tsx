@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "./action";
 
 const premiumFeatures = ["AI tools", "Up to 3 resumes"];
-const premiumPlusFeatures = ["Infinite resumes", "Design customizations"];
+const premiumPlusFeatures = ["Infinite resumes", "AI Interview Scheduler"];
 
 export default function PremiumModal() {
   const { open, setOpen } = usePremiumModal();

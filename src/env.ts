@@ -16,6 +16,14 @@ export const env = createEnv({
     GEMINI_API_KEY: z.string().min(1),
     STRIPE_SECRET_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
+    NUMBER_OF_QUESTIONS: z.preprocess(
+      (val) => Number(val),
+      z.number().int().positive(),
+    ),
+    MAX_INTERVIEWS_PER_USER: z.preprocess(
+      (val) => Number(val),
+      z.number().int().positive(),
+    ),
   },
   client: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
@@ -27,12 +35,16 @@ export const env = createEnv({
     NEXT_PUBLIC_BASE_URL: z.string().min(1).url(),
   },
   experimental__runtimeEnv: {
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY:process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
-    NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY:process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY:
+      process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
+    NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY:
+      process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
 });

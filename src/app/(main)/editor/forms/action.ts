@@ -1,6 +1,5 @@
 "use server";
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import {
   generateProjectsSchema,
   GenerateSummaryInput,
@@ -11,28 +10,11 @@ import {
   WorkExperience,
 } from "@/lib/validation";
 import { auth } from "@clerk/nextjs/server";
-import { env } from "@/env";
 import { getUserSubscriptionLevel } from "@/lib/subscription";
 import { canUseAITools } from "@/lib/permissions";
+import generateAIResponse from "@/lib/gemini";
 
-const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
-async function generateAIResponse(systemMessage: string, userMessage: string) {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
-  const subscriptionLevel = await getUserSubscriptionLevel(userId);
-
-  if (!canUseAITools(subscriptionLevel)) {
-    throw new Error("Upgrade your subscription to use this feature");
-  }
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-  const result = await model.generateContent({
-    contents: [
-      { role: "user", parts: [{ text: `${systemMessage}\n${userMessage}` }] },
-    ],
-  });
-  return result.response.text();
-}
 
 export async function generateSummary(input: GenerateSummaryInput) {
   const { userId } = await auth();

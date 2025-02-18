@@ -151,3 +151,46 @@ export const generateProjectsSchema = z.object({
     .min(20, "Must be at least 20 characters"),
 });
 export type GenerateProjectsInput = z.infer<typeof generateProjectsSchema>;
+
+export const interviewFormSchema = z.object({
+  jobPosition: optionalString,
+  jobDescription: optionalString,
+  jobExperience: optionalString,
+});
+
+export type InterviewFormValues = z.infer<typeof interviewFormSchema>;
+
+export const interviewQuestionSchema = z.object({
+  question: z.string().min(1),
+  answer: z.string().nullable(),
+  category: z.string().min(1),
+  difficulty: z.enum(["EASY", "MEDIUM", "HARD"]),
+  tags: z.array(z.string().min(1)).nonempty(),
+  notes: z.string().nullable(),
+});
+
+export type InterviewQuestion = z.infer<typeof interviewQuestionSchema>;
+
+export const mockInterviewSchema = z.object({
+  jsonMockResp: z.string().min(1),
+  jobPosition: z.string().min(1),
+  jobDesc: z.string().min(1),
+  jobExperience: z.string().min(1),
+  createdBy: z.string().min(1),
+  mockId: z.string().min(1),
+});
+
+export type MockInterview = z.infer<typeof mockInterviewSchema>;
+
+export const userAnswerSchema = z.object({
+  mockIdRef: z.number().int().positive(),
+  question: z.string().min(1),
+  correctAns: z.string().nullable(),
+  userAns: z.string().nullable(),
+  feedback: z.string().nullable(),
+  rating: z.enum(["POOR", "AVERAGE", "GOOD", "EXCELLENT"]).nullable(),
+  userEmail: z.string().email().nullable(),
+  createdAt: z.date().default(() => new Date()),
+});
+
+export type UserAnswer = z.infer<typeof userAnswerSchema>;
