@@ -26,3 +26,6 @@ export function canUseCustomizations(subscriptionLevel: SubscriptionLevel) {
 export function canInterviewScheduler(subscriptionLevel: SubscriptionLevel) {
   return subscriptionLevel === "pro_plus";
 }
+export function canChat(subscriptionLevel: SubscriptionLevel) {
+  return subscriptionLevel === "pro_plus";
+}

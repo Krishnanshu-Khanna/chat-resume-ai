@@ -6,6 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import CreateResumeButton from "./CreateResumeButton";
 import ResumeItem from "./ResumeItem";
+import Footer from "./Footer";
 
 export const metadata: Metadata = {
   title: "Your resumes",
@@ -37,6 +38,7 @@ export default async function Page() {
   ]);
 
   return (
+    <>
     <main className="mx-auto w-full max-w-7xl space-y-8 px-4 py-10">
       {/* Hero Section */}
       <section className="relative rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white shadow-lg">
@@ -82,5 +84,7 @@ export default async function Page() {
         </div>
       </section>
     </main>
+      <Footer />
+    </>
   );
 }

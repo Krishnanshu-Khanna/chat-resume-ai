@@ -17,6 +17,10 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@google/generative-ai": "^0.21.0",
     "@hookform/resolvers": "^3.9.1",
+    "@langchain/community": "^0.3.31",
+    "@langchain/core": "^0.3.40",
+    "@langchain/openai": "^0.4.4",
+    "@langchain/pinecone": "^0.1.3",
     "@prisma/client": "^6.3.1",
     "@radix-ui/react-collapsible": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -31,14 +35,18 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "instamojo-nodejs": "^0.0.5",
+    "langchain": "^0.3.19",
     "lucide-react": "^0.469.0",
     "moment": "^2.30.1",
     "next": "15.1.0",
     "next-themes": "^0.4.4",
+    "pdf-parse": "^1.1.1",
     "react": "^19.0.0",
     "react-color": "^2.19.3",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "react-markdown": "^9.0.3",
+    "react-pdf": "^9.2.1",
     "react-to-print": "^3.0.5",
     "react-webcam": "^7.2.0",
     "sonner": "^1.7.4",
@@ -66,5 +74,8 @@
     "prisma": "^6.3.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "resolutions": {
+    "@pinecone-database/pinecone": "5.0.0"
   }
 }

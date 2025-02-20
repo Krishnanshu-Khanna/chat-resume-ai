@@ -1,106 +1,84 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
-// prisma/schema.prisma
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Resume {
-  id     String @id @default(cuid())
-  userId String
-
-  title       String?
-  description String?
-
-  photoUrl    String?
-  colorHex    String  @default("#000000")
-  borderStyle String  @default("squircle")
-  fontStyle  String  @default("")
-  summary     String?
-  firstName   String?
-  lastName    String?
-  jobTitle    String?
-  city        String?
-  country     String?
-  phone       String?
-  email       String?
-  linkedin    String?
-
-  workExperiences WorkExperience[]
-  educations      Education[]
+  id              String           @id @default(cuid())
+  userId          String
+  title           String?
+  description     String?
+  photoUrl        String?
+  colorHex        String           @default("#000000")
+  borderStyle     String           @default("squircle")
+  fontStyle       String           @default("")
+  summary         String?
+  firstName       String?
+  lastName        String?
+  jobTitle        String?
+  city            String?
+  country         String?
+  phone           String?
+  email           String?
+  linkedin        String?
   skills          String[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  educations      Education[]
   projects        Project[]
-
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  workExperiences WorkExperience[]
 
   @@map("resumes")
 }
 
-
-
 model WorkExperience {
-  id String @id @default(cuid())
-
+  id          String    @id @default(cuid())
   position    String?
   company     String?
   startDate   DateTime?
   endDate     DateTime?
   description String?
   city        String?
-
-  resumeId String
-  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  resumeId    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  resume      Resume    @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@map("work_experiences")
 }
 
 model Education {
-  id String @id @default(cuid())
-
+  id        String    @id @default(cuid())
   degree    String?
   school    String?
   startDate DateTime?
   endDate   DateTime?
   grade     String?
   city      String?
-
-  resumeId String
-  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  resumeId  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  resume    Resume    @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@map("educations")
 }
 
-model Project{
-  id String @id @default(cuid())
-
+model Project {
+  id          String    @id @default(cuid())
   title       String?
   description String?
   startDate   DateTime?
   endDate     DateTime?
   link        String?
   techStack   String?
-  resumeId String
-  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  resumeId    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  resume      Resume    @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@map("projects")
 }
@@ -113,59 +91,85 @@ model UserSubscription {
   stripePriceId           String
   stripeCurrentPeriodEnd  DateTime
   stripeCancelAtPeriodEnd Boolean  @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
 
   @@map("user_subscriptions")
 }
 
 model InterviewQuestion {
-  id         String   @id @default(cuid())
-  userId     String   
+  id         String     @id @default(cuid())
+  userId     String
   question   String
   answer     String
   category   String?
   difficulty Difficulty
-  tags       String[] 
+  tags       String[]
   notes      String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 
   @@map("interview_questions")
 }
+
+model MockInterview {
+  id            Int          @id @default(autoincrement())
+  jsonMockResp  Json
+  jobPosition   String
+  jobDesc       String
+  jobExperience String
+  createdBy     String
+  createdAt     DateTime     @default(now())
+  mockId        String       @unique
+  userAnswers   UserAnswer[]
+
+  @@map("mock_interviews")
+}
+
+model UserAnswer {
+  id            Int           @id @default(autoincrement())
+  mockIdRef     String
+  question      String
+  correctAns    String?
+  userAns       String?
+  feedback      String?
+  rating        String?
+  createdAt     DateTime      @default(now())
+  answerBy      String?
+  MockInterview MockInterview @relation(fields: [mockIdRef], references: [mockId], onDelete: Cascade)
+
+  @@map("user_answers")
+}
+
+model chatPDF {
+  chatId    String   @id 
+  userId    String
+  pdfUrl    String
+  createdAt DateTime @default(now())
+  messages  Message[]
+
+  @@map("chat_pdf")
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  chatId    String  
+  role      String
+  message   String
+  createdAt DateTime @default(now())
+
+  chat      chatPDF @relation(fields: [chatId], references: [chatId], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+
+
+
+
 
 enum Difficulty {
   EASY
   MEDIUM
   HARD
-}
-
-model MockInterview {
-  id            Int     @id @default(autoincrement()) 
-  jsonMockResp  Json  
-  jobPosition   String
-  jobDesc       String
-  jobExperience String
-  createdBy     String
-  createdAt     DateTime @default(now()) 
-  mockId        String  @unique  
-
-  userAnswers   UserAnswer[]
-  @@map("mock_interviews")
-}
-
-model UserAnswer {
-  id          Int     @id @default(autoincrement()) 
-  mockIdRef   String  
-  question    String  
-  correctAns  String? 
-  userAns     String? 
-  feedback    String? 
-  rating      String? 
-  answerBy    String? 
-  createdAt   DateTime @default(now())
-
-  MockInterview MockInterview @relation(fields: [mockIdRef], references: [mockId], onDelete: Cascade)
-  @@map("user_answers")
 }

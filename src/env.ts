@@ -18,6 +18,11 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
     NUMBER_OF_QUESTIONS: z.string().min(1),
     MAX_INTERVIEWS_PER_USER: z.string().min(1),
+    PINECONE_API_KEY: z.string().min(1),
+    OPENAI_API_KEY: z.string().min(1),
+    OPENAI_MODEL: z.string().min(1),
+    PINECONE_INDEX_NAME: z.string().min(1),
+    MAX_MESSAGES_PER_CHAT: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
