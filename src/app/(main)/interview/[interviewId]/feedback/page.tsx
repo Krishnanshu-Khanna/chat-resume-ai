@@ -89,7 +89,7 @@ const Feedback = () => {
         </p>
         <Button 
           variant="outline" 
-          onClick={() => router.replace("/dashboard")} 
+          onClick={() => router.replace("/interview")} 
           className="w-full md:w-auto"
         >
           Return to Dashboard

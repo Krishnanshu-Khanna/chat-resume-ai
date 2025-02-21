@@ -1,6 +1,6 @@
 {
   "functions": {
-    "app/interview/action": {
+    "app/(main)/interview/action": {
       "runtime": "edge"
     }
   }
