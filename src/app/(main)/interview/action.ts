@@ -2,10 +2,8 @@
 
 import { env } from "@/env";
 import generateAIResponse from "@/lib/gemini";
-import { canUseAITools } from "@/lib/permissions";
 import prisma from "@/lib/prisma";
 import { v4 as uuidv4 } from "uuid";
-import { getUserSubscriptionLevel } from "@/lib/subscription";
 import {
   interviewFormSchema,
   InterviewFormValues,
@@ -17,13 +15,9 @@ import { currentUser } from "@clerk/nextjs/server";
 export async function generateInterviewQuestions(
   input: InterviewFormValues,
 ): Promise<MockInterview> {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
+  
 
-  const subscriptionLevel = await getUserSubscriptionLevel(userId);
-  if (!canUseAITools(subscriptionLevel)) {
-    throw new Error("Upgrade your subscription to use this feature");
-  }
+ 
 
   const { jobPosition, jobDescription, jobExperience } =
     interviewFormSchema.parse(input);
@@ -32,34 +26,26 @@ export async function generateInterviewQuestions(
     throw new Error("Invalid job details provided.");
   }
 
-  const systemMessage = `You are an advanced AI specializing in generating high-quality job interview questions.  
-Your task is to generate a structured set of interview questions based on the provided job details.  
-
-**Response Format:**  
-Return a **valid JSON array** containing objects with the following fields:  
-
+  const systemMessage = `**You are an AI that generates structured interview questions.**  
+**Output Format (JSON only):**  
 \`\`\`json
 [
   {
-    "question": "<The interview question>",
-    "answer": "<A well-structured answer>",
-    "category": "<Relevant category (e.g., Technical, Behavioral, HR)>",
+    "question": "<Interview question>",
+    "answer": "<Concise answer>",
+    "category": "<Technical | Behavioral | HR>",
     "difficulty": "<EASY | MEDIUM | HARD>",
-    "tags": ["<tag1>", "<tag2>", "<tag3>"],
-    "notes": "<Additional useful notes>"
+    "tags": ["<tag1>", "<tag2>"]
   }
 ]
-\`\`\`
-
-### **STRICT RULES:**
-1. **Output ONLY valid JSON.** No explanations, comments, or additional text.  
-2. **Use double quotes** for all keys and string values.  
-3. Ensure the response is **always a non-empty array**.  
-4. Maintain the **exact structure and field order** as shown above.  
-5. Questions should be **clear, relevant, and diverse** based on the job details.  
-6. Keep answers **concise yet informative**, ensuring they align with industry best practices.  
-
-Your goal is to generate **high-quality interview questions** that assess the candidate's knowledge, problem-solving abilities, and role-specific expertise.`;
+\`\`\`  
+### **Rules:**  
+- **Output only valid JSON** (no extra text).  
+- Use **double quotes** for all keys/values.  
+- Ensure **non-empty array** output.  
+- Keep **questions relevant and diverse**.  
+- **Concise answers**, aligned with best practices.  
+Your goal: Generate **high-quality questions** to assess role-specific expertise.`;
 
   const userMessage = `Please provide a set of ${env.NUMBER_OF_QUESTIONS} interview questions based on:
   - Job Position: ${jobPosition}
