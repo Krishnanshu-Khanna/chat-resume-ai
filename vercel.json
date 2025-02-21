@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/interview/action": {
+      "runtime": "edge"
+    }
+  }
+}

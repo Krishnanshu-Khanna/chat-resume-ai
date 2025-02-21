@@ -15,10 +15,19 @@ export default async function generateAIResponse(systemMessage: string, userMess
     throw new Error("Upgrade your subscription to use this feature");
   }
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-  const result = await model.generateContent({
-    contents: [
-      { role: "user", parts: [{ text: `${systemMessage}\n${userMessage}` }] },
-    ],
-  });
-  return result.response.text();
+const result = await model.generateContentStream({
+  contents: [
+    {
+      role: "user",
+      parts: [{ text: `${systemMessage}\n${userMessage || ""}` }],
+    },
+  ],
+});
+
+let responseText = "";
+for await (const chunk of result.stream) {
+  responseText += chunk.text();
+}
+
+return responseText;
 }

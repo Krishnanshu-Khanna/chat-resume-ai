@@ -89,7 +89,7 @@ const InterviewItemCard: React.FC<{
       {/* Confirmation Dialog */}
       {isDialogOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+          <div className="mx-4 w-full max-w-md rounded-lg dark:bg-black bg-white p-6 shadow-lg">
             <h3 className="mb-4 text-lg font-bold">Confirm Deletion</h3>
             <p className="mb-4">
               Are you sure you want to delete this interview?
