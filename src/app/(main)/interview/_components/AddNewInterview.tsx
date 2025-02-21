@@ -16,9 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { generateInterviewQuestions } from "../action";
 import { useRouter } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
-import { getUserSubscriptionLevel } from "@/lib/subscription";
-import { canUseAITools } from "@/lib/permissions";
+
 
 // Job Role Suggestions
 const JOB_ROLE_SUGGESTIONS = [
@@ -39,10 +37,7 @@ interface AddNewInterviewProps {
   onClose: () => void;
 }
 
-export default function AddNewInterview({
-  isOpen,
-  onClose,
-}: AddNewInterviewProps) {
+export default function AddNewInterview({ isOpen, onClose }: AddNewInterviewProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -82,12 +77,7 @@ export default function AddNewInterview({
     try {
       setLoading(true);
       console.log("Submitting data:", data); // Debugging log
-      const { userId } = await auth();
-      if (!userId) throw new Error("Unauthorized");
-      const subscriptionLevel = await getUserSubscriptionLevel(userId);
-      if (!canUseAITools(subscriptionLevel)) {
-        throw new Error("Upgrade your subscription to use this feature");
-      }
+
       const res = await generateInterviewQuestions(data);
       toast({
         description: "Interview questions generated successfully!",
@@ -109,7 +99,7 @@ export default function AddNewInterview({
   return (
     <div>
       <div
-        className="cursor-pointer rounded-lg border bg-primary-foreground p-10 transition-all hover:shadow-md"
+        className="cursor-pointer rounded-lg border bg-primary-foreground p-10 transition-all  hover:shadow-md"
         onClick={() => setOpenDialog(true)}
       >
         <h1 className="text-center text-lg font-semibold">+ Add New</h1>

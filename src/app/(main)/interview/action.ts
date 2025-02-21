@@ -11,12 +11,18 @@ import {
 } from "@/lib/validation";
 import { auth } from "@clerk/nextjs/server";
 import { currentUser } from "@clerk/nextjs/server";
+import { getUserSubscriptionLevel } from "@/lib/subscription";
+import { canUseAITools } from "@/lib/permissions";
 
 export async function generateInterviewQuestions(
   input: InterviewFormValues,
 ): Promise<MockInterview> {
-  
-
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+ const subscriptionLevel = await getUserSubscriptionLevel(userId);
+ if (!canUseAITools(subscriptionLevel)) {
+   throw new Error("Upgrade your subscription to use this feature");
+ }
  
 
   const { jobPosition, jobDescription, jobExperience } =
