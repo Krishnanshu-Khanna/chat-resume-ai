@@ -1,10 +1,19 @@
+"use client";
 import logo from "@/assets/logo.png";
 import resumePreview from "@/assets/resume-preview3.png";
 import { Button } from "@/components/ui/button";
+import { Youtube } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [showYT, setShowYT] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setShowYT(false);
+    }, 9000);
+  }, []);
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100 px-5 py-12 text-center text-gray-900 md:flex-row md:text-start lg:gap-12">
       <div className="max-w-prose space-y-3">
@@ -23,13 +32,14 @@ export default function Home() {
           in Minutes
         </h1>
         <p className="text-lg text-gray-500">
-          Our <span className="font-bold">CVGenie</span> helps you
-          design a professional resume, even if you&apos;re not very pro.
+          Our <span className="font-bold">CVGenie</span> helps you design a
+          professional resume, even if you&apos;re not very pro.
         </p>
         <Button asChild size="lg" variant="premium">
           <Link href="/resumes">Get started</Link>
         </Button>
       </div>
+
       <div>
         <Image
           src={resumePreview}
@@ -38,6 +48,19 @@ export default function Home() {
           className="shadow-md lg:rotate-[1.5deg]"
         />
       </div>
+
+      {showYT && (
+        <Link
+          href="https://youtu.be/X6uEMJ-hElM"
+          target="_blank"
+          className="fixed bottom-5 left-5 flex items-center gap-2 rounded-lg bg-black px-4 py-2 text-white shadow-lg transition duration-200 hover:bg-red-700"
+        >
+          <Youtube size={18} />
+          <span className="hidden text-sm md:block">
+            Watch Tutorial
+          </span>
+        </Link>
+      )}
     </main>
   );
 }
