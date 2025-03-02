@@ -21,6 +21,7 @@ export const env = createEnv({
     PINECONE_API_KEY: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1),
     OPENAI_MODEL: z.string().min(1),
+    GEMINI_MODEL: z.string().min(1),
     PINECONE_INDEX_NAME: z.string().min(1),
     MAX_MESSAGES_PER_CHAT: z.string().min(1),
   },

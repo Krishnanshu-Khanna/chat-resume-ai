@@ -18,7 +18,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/resumes", label: "Resume Builder" },
-    { href: "/chat", label: "ATS Chat" },
+    { href: "/chat", label: "Document Chat" },
     { href: "/interview", label: "Mock Interview" },
   ];
 

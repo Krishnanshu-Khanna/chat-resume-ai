@@ -14,7 +14,9 @@ export default async function generateAIResponse(systemMessage: string, userMess
   if (!canUseAITools(subscriptionLevel)) {
     throw new Error("Upgrade your subscription to use this feature");
   }
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+
+  const model = genAI.getGenerativeModel({ model: env.GEMINI_MODEL });
 const result = await model.generateContentStream({
   contents: [
     {
