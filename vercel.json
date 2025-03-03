@@ -1,6 +1,6 @@
 {
   "functions": {
-    "lib/gemini.ts": {
+    "src/app/(main)/interview/action.ts": {
       "maxDuration": 60
     }
   }
