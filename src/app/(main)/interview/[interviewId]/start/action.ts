@@ -1,7 +1,7 @@
 "use server"; // ✅ Required for Server Actions
 
+import { generateAIResponseWithPrompt } from "@/lib/gemini";
 import prisma from "@/lib/prisma";
-import generateAIResponse from "@/lib/gemini";
 
 export async function getInterviewDetails(interviewId: string) {
   try {
@@ -28,48 +28,6 @@ interface AnswerRecord {
   rating: string;
   answerBy: string;
 }
-
-export const processAnswer = async (
-  userAnswer: string,
-  mockInterviewQuestion: Question[],
-  activeQuestionIndex: number,
-  mockId: string,
-  userId: string,
-): Promise<AnswerRecord | null> => {
-
-  if (!userAnswer.trim()) {
-    return null;
-  }
-
-  try {
-    const feedbackPrompt = `Question: ${mockInterviewQuestion[activeQuestionIndex]?.question}, User Answer: ${userAnswer}. Please give a rating out of 10 and feedback on improvement in JSON format { \"rating\": <number>, \"feedback\": <text> }`;
-    const result = await generateAIResponse(feedbackPrompt);
-    const JsonfeedbackResp = JSON.parse(result);
-
-    const answerRecord: AnswerRecord = {
-      mockIdRef: mockId,
-      question: mockInterviewQuestion[activeQuestionIndex]?.question,
-      correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
-      userAns: userAnswer,
-      feedback: JsonfeedbackResp?.feedback,
-      rating: JsonfeedbackResp?.rating.toString(),
-      answerBy: userId,
-    };
-    try {
-      await saveAnswerToDatabase(answerRecord);
-    } catch (error) {
-      console.error("Error saving answer to database:", error);
-    }
-
-    return answerRecord;
-  } catch (error: unknown) {
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
-    console.error("Answer processing error:", errorMessage);
-    return null;
-  }
-};
-
 export const saveAnswerToDatabase = async (
   answerRecord: AnswerRecord,
 ): Promise<boolean> => {
@@ -88,4 +46,60 @@ export const saveAnswerToDatabase = async (
     console.error("Database save error:", errorMessage);
     return false;
   }
+};
+
+
+export const processAnswer = async (
+  userAnswer: string,
+  mockInterviewQuestion: Question[],
+  activeQuestionIndex: number,
+  mockId: string,
+  userId: string,
+): Promise<AnswerRecord | null> => {
+  if (!userAnswer.trim()) {
+    return null;
+  }
+
+ try {
+   const feedbackPrompt = `Question: ${mockInterviewQuestion[activeQuestionIndex]?.question}, User Answer: ${userAnswer}. Please give a rating out of 10 and feedback on improvement in the following JSON format:
+  {
+    "rating": <number>,
+    "feedback": "<text>"
+  }`;
+
+   const result = await generateAIResponseWithPrompt(feedbackPrompt);
+
+   let JsonfeedbackResp;
+   try {
+     // Remove the code block markers and parse the JSON
+
+      const cleanedResult: string = result.replace(/```json|```/g, "");
+     JsonfeedbackResp = JSON.parse(cleanedResult);
+   } catch (error) {
+     console.error("JSON parsing error:", error);
+     console.log("Invalid JSON string:", result);
+     // Handle the error appropriately, e.g., return a default value or throw an error
+     return null; // or handle the error as appropriate for your application
+   }
+
+   const answerRecord: AnswerRecord = {
+     mockIdRef: mockId,
+     question: mockInterviewQuestion[activeQuestionIndex]?.question,
+     correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
+     userAns: userAnswer,
+     feedback: JsonfeedbackResp?.feedback,
+     rating: JsonfeedbackResp?.rating.toString(),
+     answerBy: userId,
+   };
+   try {
+     await saveAnswerToDatabase(answerRecord);
+   } catch (error) {
+     console.error("Error saving answer to database:", error);
+   }
+
+   return answerRecord;
+ } catch (error) {
+   console.error("Answer processing error:", error);
+   return null;
+ }
 };

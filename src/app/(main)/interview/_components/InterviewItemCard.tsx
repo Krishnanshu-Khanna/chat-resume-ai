@@ -50,56 +50,69 @@ const InterviewItemCard: React.FC<{
   };
 
   return (
-    <div className="relative rounded-sm border p-3 shadow-sm">
-      {/* Delete button in the top-right corner */}
+    <div className="relative rounded-lg border bg-white p-4 shadow-md transition hover:shadow-lg dark:bg-neutral-900">
+      {/* Delete Button */}
       <Button
-        size="sm"
-        variant="outline"
-        className="absolute right-2 top-2 flex items-center justify-center"
+        size="icon"
+        variant="ghost"
+        className="absolute right-3 top-3 p-2 text-red-500 transition hover:text-red-700"
         onClick={() => setIsDialogOpen(true)}
       >
-        <Trash className="text-red-600" />
+        <Trash className="h-4 w-4" />
       </Button>
 
-      {/* Card Content */}
-      <div>
-        <h2 className="font-bold text-primary">{interview?.jobPosition}</h2>
-        <h2 className="text-sm text-gray-500">
-          Experience: {interview?.jobExperience} Year(s)
+      {/* Job Details */}
+      <div className="space-y-2">
+        <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">
+          {interview?.jobPosition}
         </h2>
-        <h2 className="text-sm text-gray-500">
-          Created At: {interview?.createdAt}
-        </h2>
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          Experience:{" "}
+          <span className="font-medium">
+            {interview?.jobExperience} Year(s)
+          </span>
+        </p>
+        <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          Created At: {new Date(interview?.createdAt).toLocaleString()}
+        </p>
       </div>
 
-      <div className="mt-2 flex justify-between gap-5">
+      {/* Action Buttons */}
+      <div className="mt-4 grid grid-cols-2 gap-3">
         <Button
           size="sm"
           variant="outline"
-          className="w-full"
+          className="rounded-md border border-purple-500 text-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900 dark:hover:text-white"
           onClick={onFeedbackPress}
         >
           Feedback
         </Button>
-        <Button className="w-full" size="sm" onClick={onStart}>
+        <Button
+          size="sm"
+          className="rounded-md bg-purple-600 text-white hover:bg-purple-500"
+          onClick={onStart}
+        >
           Start
         </Button>
       </div>
 
       {/* Confirmation Dialog */}
       {isDialogOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="mx-4 w-full max-w-md rounded-lg dark:bg-black bg-white p-6 shadow-lg">
-            <h3 className="mb-4 text-lg font-bold">Confirm Deletion</h3>
-            <p className="mb-4">
-              Are you sure you want to delete this interview?
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="mx-4 w-full max-w-sm rounded-lg bg-white p-5 shadow-lg dark:bg-neutral-900">
+            <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-white">
+              Confirm Deletion
+            </h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              Are you sure you want to delete this interview? This action cannot
+              be undone.
             </p>
-            <div className="flex justify-end gap-3">
+            <div className="mt-4 flex justify-end gap-3">
               <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
                 Cancel
               </Button>
               <Button variant="destructive" onClick={onDelete}>
-                Confirm Delete
+                Delete
               </Button>
             </div>
           </div>

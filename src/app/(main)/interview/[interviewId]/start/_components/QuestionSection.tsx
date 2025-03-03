@@ -27,7 +27,7 @@ const QuestionsSection: React.FC<QuestionsSectionProps> = ({
   };
 
   return (
-    <div className="my-10 space-y-6 rounded-lg border bg-white p-6 shadow-md dark:bg-secondary">
+    <div className="my-10 space-y-6 rounded-lg border bg-white p-6 shadow-md dark:bg-primary-foreground">
       {/* Question Number Grid */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {mockInterviewQuestion.map((_, index) => (
@@ -62,15 +62,16 @@ const QuestionsSection: React.FC<QuestionsSectionProps> = ({
       </div>
 
       {/* Note Section */}
-      <div className="rounded-lg border bg-purple-50 p-5 shadow-sm dark:bg-primary">
+      <div className="rounded-lg border bg-purple-50 p-5 shadow-sm dark:bg-secondary dark:border-purple-900">
         <h2 className="flex items-center gap-2 text-purple-700">
           <Lightbulb className="h-5 w-5 text-purple-500" />
           <strong>Note:</strong>
         </h2>
-        <p className="mt-2 text-sm text-purple-800">
+        <p className="mt-2 text-sm text-purple-800 dark:text-purple-600">
           Turn on your webcam and microphone to begin your AI-powered mock
           interview. You&apos;ll be asked five questions, and upon completion,
-          you&apos;ll receive a detailed report based on your responses.<br/>
+          you&apos;ll receive a detailed report based on your responses.
+          <br />
           <strong>Important:</strong> Your video is not recorded, and you can
           disable webcam access anytime.
         </p>

@@ -12,10 +12,10 @@ import { toast } from "@/hooks/use-toast";
 import { interviewFormSchema, InterviewFormValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle, WandSparkles } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { generateInterviewQuestions } from "../action";
-import { useRouter } from "next/navigation";
 
 
 // Job Role Suggestions
@@ -38,7 +38,6 @@ interface AddNewInterviewProps {
 }
 
 export default function AddNewInterview({ isOpen, onClose }: AddNewInterviewProps) {
-  const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const form = useForm<InterviewFormValues>({
@@ -82,14 +81,14 @@ export default function AddNewInterview({ isOpen, onClose }: AddNewInterviewProp
       toast({
         description: "Interview questions generated successfully!",
       });
-      setOpenDialog(false);
+      onClose();
       form.reset();
       router.push(`/interview/${res.mockId}`);
     } catch (error) {
       console.error("Error generating questions:", error);
       toast({
         variant: "destructive",
-        description: "Something went wrong. Please try again.",
+        description: "Something went wrong. Please try again. "+error,
       });
     } finally {
       setLoading(false);
@@ -98,36 +97,34 @@ export default function AddNewInterview({ isOpen, onClose }: AddNewInterviewProp
 
   return (
     <div>
-      <div
+      {/* <div
         className="cursor-pointer rounded-lg border bg-primary-foreground p-10 transition-all  hover:shadow-md"
         onClick={() => setOpenDialog(true)}
       >
         <h1 className="text-center text-lg font-semibold">+ Add New</h1>
-      </div>
+      </div> */}
       <Dialog
-        open={isOpen && openDialog}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            form.reset();
-            onClose();
-          }
-          setOpenDialog(isOpen);
-        }}
+        open={isOpen}
+        onOpenChange={(isOpen) => !isOpen && (form.reset(), onClose())}
       >
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-xl rounded-lg border border-neutral-300 bg-white px-6 py-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-900 sm:px-8">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
-              Create Your Interview Preparation
+            <DialogTitle className="text-xl font-semibold text-neutral-800 dark:text-white">
+              Create Your Interview
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={onSubmit}>
-            <div className="my-3 mt-7">
-              <label>Job Role/Position</label>
-              <div className="flex items-center space-x-2">
+          <form onSubmit={onSubmit} className="space-y-5">
+            {/* Job Role */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                Job Role/Position
+              </label>
+              <div className="flex items-center rounded-md border border-neutral-300 bg-white px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-500 dark:border-neutral-700 dark:bg-neutral-800">
                 <Input
                   placeholder="Ex. Full Stack Developer"
                   {...form.register("jobPosition", { required: true })}
                   list="jobRoles"
+                  className="w-full bg-transparent text-neutral-800 placeholder-neutral-400 focus:outline-none dark:text-white dark:placeholder-neutral-500"
                 />
                 <datalist id="jobRoles">
                   {JOB_ROLE_SUGGESTIONS.map((role) => (
@@ -139,7 +136,7 @@ export default function AddNewInterview({ isOpen, onClose }: AddNewInterviewProp
                   variant="ghost"
                   size="icon"
                   onClick={() => {
-                    const selectedRole = form.watch("jobPosition"); // Use watch instead of getValues
+                    const selectedRole = form.watch("jobPosition");
                     if (selectedRole) {
                       autoSuggestTechStack(selectedRole);
                     } else {
@@ -149,40 +146,58 @@ export default function AddNewInterview({ isOpen, onClose }: AddNewInterviewProp
                       });
                     }
                   }}
+                  className="text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white"
                 >
                   <WandSparkles className="h-4 w-4" />
                 </Button>
               </div>
             </div>
-            <div className="my-3">
-              <label>Job Description/Tech Stack</label>
+
+            {/* Job Description */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                Job Description / Tech Stack
+              </label>
               <Textarea
-                placeholder="Ex. React, Angular, NodeJs, MySql etc"
+                placeholder="Ex. React, Angular, Node.js, MySQL"
                 {...form.register("jobDescription", { required: true })}
+                className="rounded-md border border-neutral-300 bg-white text-neutral-800 placeholder-neutral-400 focus:ring-1 focus:ring-indigo-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500"
               />
             </div>
-            <div className="my-3">
-              <label>Years of Experience</label>
+
+            {/* Experience */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                Years of Experience
+              </label>
               <Input
                 placeholder="Ex. 5"
                 type="number"
                 min="0"
                 max="70"
                 {...form.register("jobExperience", { required: true })}
+                className="rounded-md border border-neutral-300 bg-white text-neutral-800 placeholder-neutral-400 focus:ring-1 focus:ring-indigo-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500"
               />
             </div>
-            <div className="flex justify-end gap-5">
+
+            {/* Buttons */}
+            <div className="flex justify-end gap-3 pt-3">
               <Button
                 type="button"
                 variant="ghost"
-                onClick={() => setOpenDialog(false)}
+                onClick={onClose}
+                className="rounded-md px-4 py-2 text-neutral-600 transition hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={loading}>
+              <Button
+                type="submit"
+                disabled={loading}
+                className="rounded-md bg-indigo-600 px-5 py-2 font-medium text-white transition hover:bg-indigo-500"
+              >
                 {loading ? (
                   <>
-                    <LoaderCircle className="mr-2 animate-spin" /> Generating
+                    <LoaderCircle className="mr-2 animate-spin" /> Generating...
                   </>
                 ) : (
                   "Start Interview"

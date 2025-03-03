@@ -1,15 +1,15 @@
 "use client"
 
-import { Bot, ListChecks, Plus, TrendingUp, Trophy, Zap } from "lucide-react";
-import AddNewInterview from "./_components/AddNewInterview";
-import { useState, useEffect } from "react";
-import { fetchUserInterviews, getUserDetails } from "./action";
-import { useAuth } from "@clerk/nextjs";
-import { toast } from "sonner";
-import InterviewList from "./_components/InterviewList";
-import { canInterviewScheduler } from "@/lib/permissions";
 import usePremiumModal from "@/hooks/usePremiumModal";
+import { canInterviewScheduler } from "@/lib/permissions";
+import { useAuth } from "@clerk/nextjs";
+import { Award, Bot, ChartNoAxesCombined, ClipboardCheck, Plus, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
+import AddNewInterview from "./_components/AddNewInterview";
+import InterviewList from "./_components/InterviewList";
+import { fetchUserInterviews, getUserDetails } from "./action";
 
 export default function Page() {
   const { userId } = useAuth();
@@ -63,19 +63,38 @@ const InterviewPage = ({
 }) => {
   const { userId } = useAuth();
   const [isNewInterviewModalOpen, setIsNewInterviewModalOpen] = useState(false);
+  
   const [statsCards, setStatsCards] = useState([
     {
-      icon: <ListChecks size={32} className="text-indigo-600" />,
-      label: "Total Interviews",
+      icon: (
+        <ClipboardCheck
+          size={32}
+          // style={{ stroke: "url(#gradientId)" }} // Apply gradient to stroke
+          color="white" 
+        />
+      ),
+      label: "Total Mock Interviews",
       value: "0",
     },
     {
-      icon: <Trophy size={32} className="text-green-600" />,
-      label: "Best Score",
+      icon: (
+        <Award
+          size={32}
+          // style={{ stroke: "url(#gradientId)" }} // Apply gradient
+          color="white"
+        />
+      ),
+      label: "Top Score",
       value: "N/A",
     },
     {
-      icon: <TrendingUp size={32} className="text-blue-600" />,
+      icon: (
+        <ChartNoAxesCombined
+          size={32}
+          // style={{ stroke: "url(#gradientId)" }} // Apply gradient
+          color="white"
+        />
+      ),
       label: "Improvement Rate",
       value: "0%",
     },
@@ -101,21 +120,40 @@ const InterviewPage = ({
 
         setStatsCards([
           {
-            icon: <ListChecks size={32} className="text-indigo-600" />,
-            label: "Total Interviews",
+            icon: (
+              <ClipboardCheck
+                size={32}
+                color="white" // Apply gradient to stroke
+              />
+            ),
+            label: "Total Mock Interviews",
             value: totalInterviews.toString(),
           },
           {
-            icon: <Trophy size={32} className="text-green-600" />,
-            label: "Best Score",
+            icon: (
+              <Award
+                size={32}
+                // style={{ stroke: "url(#gradientId)" }} // Apply gradient
+                color="white"
+              />
+            ),
+            label: "Top Score",
             value: bestScore ? `${bestScore}/10` : "N/A",
           },
           {
-            icon: <TrendingUp size={32} className="text-blue-600" />,
+            icon: (
+              <ChartNoAxesCombined
+                size={32}
+                // style={{ stroke: "url(#gradientId)" }} // Apply gradient
+                color="white"
+              />
+            ),
             label: "Improvement Rate",
             value: `${improvementRate}%`,
           },
         ]);
+
+
 
         if (totalInterviews > 0) {
           toast.success(`Loaded ${totalInterviews} interview(s)`);
@@ -130,6 +168,15 @@ const InterviewPage = ({
  return (
    <div className="container mx-auto max-w-6xl px-6 py-12">
      {/* 🔹 Header Section */}
+     {/* <svg width="0" height="0">
+       <defs>
+         <linearGradient id="gradientId" x1="0" x2="1" y1="0" y2="1">
+           <stop offset="0%" stopColor="#ec4899" /> 
+           <stop offset="100%" stopColor="#8b5cf6" /> 
+         </linearGradient>
+       </defs>
+     </svg> */}
+
      <div className="flex flex-col items-center text-center">
        <Bot size={72} className="text-indigo-500 drop-shadow-lg" />
 
@@ -152,15 +199,20 @@ const InterviewPage = ({
 
      {/* 🔹 Stats Cards Section */}
      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-       {statsCards.map((card) => (
+       {statsCards.map((card, index) => (
          <div
-           key={card.label}
-           className="flex items-center rounded-2xl bg-white/10 p-6 shadow-lg backdrop-blur-lg transition-all hover:scale-105 hover:shadow-2xl"
+           key={index}
+           className="relative flex items-center gap-6 rounded-xl border border-white/20 from-[#1E1E2E] to-[#2A2A3A] p-6 shadow-lg backdrop-blur-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl dark:bg-gradient-to-br"
          >
-           {card.icon}
-           <div className="ml-4">
-             <p className="text-sm dark:text-gray-300">{card.label}</p>
-             <p className="text-3xl font-bold dark:text-white">{card.value}</p>
+           {/* Icon on the Left */}
+           <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 shadow-lg">
+             {card.icon}
+           </div>
+
+           {/* Text on the Right */}
+           <div>
+             <p className="text-sm font-medium text-gray-400">{card.label}</p>
+             <p className="mt-1 text-4xl font-extrabold">{card.value}</p>
            </div>
          </div>
        ))}
@@ -168,7 +220,7 @@ const InterviewPage = ({
 
      {/* ⚡ Create AI Mock Interview Section */}
 
-     {canInterviewScheduler(subscriptionLevel)? (
+     {canInterviewScheduler(subscriptionLevel) ? (
        <div className="mt-14 rounded-2xl bg-gradient-to-r from-gray-900 to-gray-800 p-8 shadow-2xl">
          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
            <h2 className="flex items-center gap-3 text-3xl font-bold text-white">
@@ -176,7 +228,7 @@ const InterviewPage = ({
              Create AI Mock Interview
            </h2>
            <button
-             onClick={() => setIsNewInterviewModalOpen(true)}
+             onClick={() => setIsNewInterviewModalOpen(true)} // Ensure the state is set to true
              className="flex items-center rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3 text-lg font-bold text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-2xl"
            >
              <Plus size={24} className="mr-2" />
@@ -185,34 +237,32 @@ const InterviewPage = ({
          </div>
 
          {/* Add New Interview Component */}
-         <div className="mt-8">
-           <AddNewInterview
-             isOpen={isNewInterviewModalOpen}
-             onClose={() => setIsNewInterviewModalOpen(false)}
-           />
-         </div>
+         <AddNewInterview
+           isOpen={isNewInterviewModalOpen}
+           onClose={() => setIsNewInterviewModalOpen(false)}
+         />
        </div>
-     ):(
+     ) : (
        <div className="mt-14 rounded-2xl bg-gradient-to-r from-gray-900 to-gray-800 p-8 shadow-2xl">
          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
            <h2 className="flex items-center gap-3 text-3xl font-bold text-white">
              <Zap size={32} className="text-yellow-400" />
-              Create AI Mock Interview
-            </h2>
-            <button
-              onClick={() => premiumModal.setOpen(true)}
-              className="flex items-center rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3 text-lg font-bold text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-2xl"
-            >
-              <Plus size={24} className="mr-2" />
-              New Interview
-            </button>
-          </div>
-        </div>
-      )}
+             Create AI Mock Interview
+           </h2>
+           <button
+             onClick={() => premiumModal.setOpen(true)}
+             className="flex items-center rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3 text-lg font-bold text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-2xl"
+           >
+             <Plus size={24} className="mr-2" />
+             New Interview
+           </button>
+         </div>
+       </div>
+     )}
 
      {/* 🔹 Interview History Section */}
      <div className="mt-12">
-       <h2 className="text-2xl font-semibold text-white">Interview History</h2>
+       <h2 className="text-2xl font-semibold ">Interview History</h2>
        <div className="mt-6">
          <InterviewList />
        </div>

@@ -43,12 +43,23 @@ const InterviewList = () => {
       <div className="my-3 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {interviewList.length > 0 ? (
           interviewList.map((int, index) => (
-            <InterviewItemCard interview={{ ...int, createdAt: int.createdAt.toISOString() }} key={index} onDeleteSuccess={(mockId) => {
-              setInterviewList(interviewList.filter(interview => interview.mockId !== mockId));
-            }} />
+            <InterviewItemCard
+              interview={{ ...int, createdAt: int.createdAt.toISOString() }}
+              key={index}
+              onDeleteSuccess={(mockId) => {
+                setInterviewList(
+                  interviewList.filter(
+                    (interview) => interview.mockId !== mockId,
+                  ),
+                );
+              }}
+            />
           ))
         ) : (
-          <p>No interviews found.</p>
+          <div className="flex flex-col items-center justify-center text-center text-neutral-500 dark:text-neutral-300">
+            <p className="text-lg"> No mock interviews found!</p>
+            <p className="mt-2 text-sm">Start practicing now to get ahead.</p>
+          </div>
         )}
       </div>
     </div>
