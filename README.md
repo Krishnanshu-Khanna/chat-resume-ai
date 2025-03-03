@@ -2,6 +2,9 @@
 
 CVGenie is a comprehensive full-stack resume builder application with AI-driven features to enhance resume quality and improve hiring success.
 
+[Preview Application](https://aicvgenie.vercel.app)
+
+
 ## Technologies Used
 
 - Next.js
@@ -50,7 +53,7 @@ Deploy the application using Vercel or your preferred hosting platform.
 
 ## Contact
 
-For any inquiries, please reach out to Krishnanshu Khanna at krishnanshu.khanna@gmail.com.
+For any inquiries, please reach out to me at krishnanshu.khanna@gmail.com.
 
 ---
 
