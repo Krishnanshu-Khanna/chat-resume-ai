@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "lib/gemini.ts": {
+      "maxDuration": 60
+    }
+  }
+}
