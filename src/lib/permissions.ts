@@ -16,16 +16,16 @@ export function canCreateResume(
 }
 
 export function canUseAITools(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel !== "free";
+  return subscriptionLevel === "free";
 }
 
 export function canUseCustomizations(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel === "pro_plus";
+  return subscriptionLevel === "free";
 }
 
 export function canInterviewScheduler(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel === "pro_plus";
+  return subscriptionLevel === "free";
 }
 export function canChat(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel === "pro_plus";
+  return subscriptionLevel === "free";
 }
