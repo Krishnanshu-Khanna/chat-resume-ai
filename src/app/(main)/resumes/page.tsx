@@ -71,7 +71,7 @@ export default async function Page() {
             resumes.map((resume) => (
               <div
                 key={resume.id}
-                className="relative rounded-lg border bg-white p-4 shadow-md transition hover:shadow-lg"
+                className="relative rounded-lg border dark:bg-primary-foreground p-4 shadow-md transition hover:shadow-lg"
               >
                 <ResumeItem resume={resume} />
               </div>

@@ -129,17 +129,18 @@ export default function Chat({ chatId }: { chatId: string }) {
       <div className="flex flex-col gap-2 overflow-x-hidden bg-gray-100 px-4 py-2 dark:bg-gray-900 sm:flex-row">
         {[
           {
-            label: "Give ATS Score",
+            label: "Detailed Explanation",
             prompt:
-              "You are an ATS score checker. Give a score out of 100 to the resume based on industry standards.",
+              "Provide a comprehensive and in-depth explanation of the given content.",
           },
           {
-            label: "Summarize this",
-            prompt: "Summarize the given content in a concise manner.",
+            label: "Concise Summary",
+            prompt: "Summarize the content briefly while retaining key points.",
           },
           {
-            label: "Explain in simple terms",
-            prompt: "Rephrase this in easy-to-understand language.",
+            label: "Simplified Explanation",
+            prompt:
+              "Rephrase this in clear, simple, and easy-to-understand language.",
           },
         ].map(({ label, prompt }) => (
           <button

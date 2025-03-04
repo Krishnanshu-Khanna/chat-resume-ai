@@ -13,7 +13,7 @@ interface ChatItemProps {
 
 const ChatItemCard: React.FC<ChatItemProps> = ({ chat, onSeeResume }) => {
   return (
-    <div className="flex items-center justify-between rounded-lg border bg-white p-4 shadow-md">
+    <div className="flex items-center justify-between rounded-lg border bg-white dark:bg-secondary p-4 shadow-md">
       <div>
         <h3 className="text-lg font-semibold">Chat ID: {chat.chatId}</h3>
         <p className="text-sm text-gray-500">
