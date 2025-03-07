@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex items-center text-sm gap-2 text-gray-700 dark:text-gray-400">
           <CopyrightIcon />
           <span className="">
-            {new Date().getFullYear()} CVGenie. All Rights Reserved.
+            {new Date().getFullYear()} CVHelper. All Rights Reserved.
           </span>
         </div>
 

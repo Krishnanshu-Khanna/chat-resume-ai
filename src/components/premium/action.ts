@@ -34,7 +34,7 @@ export async function createCheckoutSession(priceId: string) {
     },
     custom_text: {
       terms_of_service_acceptance: {
-        message: `I have read CVGenie's [terms of service](${env.NEXT_PUBLIC_BASE_URL}/tos) and agree to them.`,
+        message: `I have read CVHelper's [terms of service](${env.NEXT_PUBLIC_BASE_URL}/tos) and agree to them.`,
       },
     },
     consent_collection: {

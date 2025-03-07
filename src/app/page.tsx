@@ -32,7 +32,7 @@ export default function Home() {
           in Minutes
         </h1>
         <p className="text-lg text-gray-500">
-          Our <span className="font-bold">CVGenie</span> helps you design a
+          Our <span className="font-bold">CVHelper</span> helps you design a
           professional resume, even if you&apos;re not very pro.
         </p>
         <Button asChild size="lg" variant="premium">

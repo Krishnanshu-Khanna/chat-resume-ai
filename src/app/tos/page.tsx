@@ -12,15 +12,15 @@ export default function Page() {
         Effective Date: Feb 01, 2025
       </p>
       <p>
-        Welcome to CVGenie. These Terms of Service (&quot;Terms&quot;)
+        Welcome to CVHelper. These Terms of Service (&quot;Terms&quot;)
         govern your use of our website and services, including any paid
-        subscription plans. By accessing or using CVGenie (&quot;the
+        subscription plans. By accessing or using CVHelper (&quot;the
         Service&quot;), you agree to be bound by these Terms. If you do not
         agree to these Terms, do not use the Service.
       </p>
       <h2 className="text-xl font-semibold">1. Overview</h2>
       <p>
-        CVGenie is a SaaS platform that provides resume-building tools
+        CVHelper is a SaaS platform that provides resume-building tools
         powered by artificial intelligence. We offer both a free tier and paid
         subscription plans (&quot;Paid Plans&quot;). Payments for Paid Plans are
         processed through Stripe, our third-party payment provider.
@@ -67,7 +67,7 @@ export default function Page() {
           the renewal date.
         </li>
         <li>
-          <strong>Refund Policy:</strong> CVGenie does not offer
+          <strong>Refund Policy:</strong> CVHelper does not offer
           refunds for any payments already processed. However, you can cancel
           your subscription at any time, and you will continue to have access to
           the Paid Plan features until the end of your current billing period.
@@ -92,7 +92,7 @@ export default function Page() {
       </p>
       <h2 className="text-xl font-semibold">8. License to Use the Service</h2>
       <p>
-        CVGenie grants you a limited, non-exclusive, non-transferable,
+        CVHelper grants you a limited, non-exclusive, non-transferable,
         and revocable license to use the Service for personal or professional
         use in accordance with these Terms. You may not:
       </p>
@@ -107,12 +107,12 @@ export default function Page() {
       <h2 className="text-xl font-semibold">9. Intellectual Property</h2>
       <p>
         All content, trademarks, logos, and intellectual property related to AI
-        Resume Builder are owned by CVGenie or its licensors. You
+        Resume Builder are owned by CVHelper or its licensors. You
         agree not to infringe on these rights.
       </p>
       <h2 className="text-xl font-semibold">10. User Content</h2>
       <p>
-        By using the Service, you grant CVGenie a non-exclusive,
+        By using the Service, you grant CVHelper a non-exclusive,
         worldwide, royalty-free license to use, modify, and display any content
         you create using the platform (such as resumes) solely for the purpose
         of providing the Service. You retain all ownership of your content.
@@ -126,21 +126,21 @@ export default function Page() {
       <h2 className="text-xl font-semibold">12. Third-Party Services</h2>
       <p>
         The Service may contain links or integrations to third-party websites or
-        services (e.g., Stripe for payments). CVGenie is not
+        services (e.g., Stripe for payments). CVHelper is not
         responsible for the content or practices of any third-party websites or
         services.
       </p>
       <h2 className="text-xl font-semibold">13. Disclaimer of Warranties</h2>
       <p>
         The Service is provided on an &quot;as is&quot; and &quot;as
-        available&quot; basis. CVGenie makes no warranties, express or
+        available&quot; basis. CVHelper makes no warranties, express or
         implied, regarding the Service, including but not limited to the
         accuracy of resume outputs, the suitability of resumes for job
         applications, or the uninterrupted availability of the Service.
       </p>
       <h2 className="text-xl font-semibold">14. Limitation of Liability</h2>
       <p>
-        To the fullest extent permitted by law, CVGenie shall not be
+        To the fullest extent permitted by law, CVHelper shall not be
         liable for any indirect, incidental, consequential, or punitive damages,
         including loss of profits, data, or business opportunities, arising out
         of or related to your use of the Service.
@@ -165,7 +165,7 @@ export default function Page() {
         [Insert Contact Information].
       </p>
       <p>
-        By using CVGenie, you acknowledge that you have read,
+        By using CVHelper, you acknowledge that you have read,
         understood, and agree to these Terms of Service.
       </p>
     </main>

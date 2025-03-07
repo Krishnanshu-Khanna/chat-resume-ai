@@ -29,13 +29,13 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3">
           <Image
             src={logo}
-            alt="CV Genie Logo"
+            alt="CVHelper Logo"
             width={40}
             height={40}
             className="rounded-full"
           />
           <span className="text-xl font-bold tracking-tight dark:text-white">
-            CV Genie
+            CV Helper
           </span>
         </Link>
 

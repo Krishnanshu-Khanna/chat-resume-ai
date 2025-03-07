@@ -9,11 +9,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - CV Genie",
-    absolute: "CV Genie",
+    template: "%s - CV Helper",
+    absolute: "CV Helper",
   },
   description:
-    "CV Genie, an AI-powered resume builder, simplifies the process of crafting a professional resume designed to help you secure your dream job.",
+    "CV Helper, an AI-powered resume builder, simplifies the process of crafting a professional resume designed to help you secure your dream job.",
   icons: 
     {
     icon: "/favicon.ico",

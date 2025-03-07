@@ -11,6 +11,7 @@ import AddNewInterview from "./_components/AddNewInterview";
 import InterviewList from "./_components/InterviewList";
 import { fetchUserInterviews, getUserDetails } from "./action";
 
+
 export default function Page() {
   const { userId } = useAuth();
 

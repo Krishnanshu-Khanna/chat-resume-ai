@@ -1,8 +1,8 @@
-# CVGenie
+# CVHelper
 
-CVGenie is a comprehensive full-stack resume builder application with AI-driven features to enhance resume quality and improve hiring success.
+CVHelper is a comprehensive full-stack resume builder application with AI-driven features to enhance resume quality and improve hiring success.
 
-[Preview Application](https://aicvgenie.vercel.app)
+[Preview Application](https://cvhelper.in)
 
 
 ## Technologies Used
