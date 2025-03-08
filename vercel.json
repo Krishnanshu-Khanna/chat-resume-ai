@@ -5,9 +5,20 @@
     }
   },
   "redirects": [
-    { "source": "https://www.cvhelper.in/:path*", "destination": "https://cvhelper.in/:path*", "permanent": true },
-    { "source": "/:path*.html", "destination": "/:path*", "permanent": true },
-    { "source": "/:path*.php", "destination": "/:path*", "permanent": true }
+    {
+      "source": "/:path*",
+      "destination": "https://cvhelper.in/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*.html",
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*.php",
+      "destination": "/:path*",
+      "permanent": true
+    }
   ]
 }
-  
