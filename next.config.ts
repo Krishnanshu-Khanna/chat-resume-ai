@@ -26,10 +26,10 @@ const nextConfig: NextConfig = {
           {
             type: "header",
             key: "host",
-            value: "^www\\.cvhelper\\.in$", // ✅ Correct regex pattern
+            value: "^cvhelper\\.in$", // ✅ Matches "cvhelper.in" (without www)
           },
         ],
-        destination: "https://cvhelper.in/:path*",
+        destination: "https://www.cvhelper.in/:path*",
         permanent: true,
       },
       {
