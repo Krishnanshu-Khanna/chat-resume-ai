@@ -19,7 +19,7 @@ export default function Home() {
       <div className="max-w-prose space-y-3">
         <Image
           src={logo}
-          alt="Logo"
+          alt="CV Helper Logo"
           width={150}
           height={150}
           className="mx-auto md:ms-0"
@@ -32,8 +32,10 @@ export default function Home() {
           in Minutes
         </h1>
         <p className="text-lg text-gray-500">
-          Our <span className="font-bold">CVHelper</span> helps you design a
-          professional resume, even if you&apos;re not very pro.
+          <span className="font-bold">CVHelper</span> is an AI-driven resume
+          builder designed to help job seekers craft professional resumes
+          effortlessly. Enhance your resume with AI, practice with mock
+          interviews, and secure your dream job!
         </p>
         <Button asChild size="lg" variant="premium">
           <Link href="/resumes">Get started</Link>
@@ -44,6 +46,7 @@ export default function Home() {
         <Image
           src={resumePreview}
           alt="Resume preview"
+          loading="lazy"
           width={600}
           className="shadow-md lg:rotate-[1.5deg]"
         />
@@ -51,14 +54,12 @@ export default function Home() {
 
       {showYT && (
         <Link
-          href="https://youtu.be/X6uEMJ-hElM"
+          href="https://www.youtube.com/watch?v=X6uEMJ-hElM&utm_source=cvhelper&utm_medium=button&utm_campaign=tutorial"
           target="_blank"
           className="fixed bottom-5 left-5 flex items-center gap-2 rounded-lg bg-black px-4 py-2 text-white shadow-lg transition duration-200 hover:bg-red-700"
         >
           <Youtube size={18} />
-          <span className="hidden text-sm md:block">
-            Watch Tutorial
-          </span>
+          <span className="hidden text-sm md:block">Watch Tutorial</span>
         </Link>
       )}
     </main>
