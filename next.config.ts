@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "img.clerk.com", // ✅ Moved Clerk's domain here
+        hostname: "img.clerk.com",
       },
     ],
   },
@@ -22,8 +22,24 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:path*",
-        has: [{ type: "header", key: "host", value: "www.cvhelper.in" }],
+        has: [
+          {
+            type: "header",
+            key: "host",
+            value: "^www\\.cvhelper\\.in$", // ✅ Correct regex pattern
+          },
+        ],
         destination: "https://cvhelper.in/:path*",
+        permanent: true,
+      },
+      {
+        source: "/index.html",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/index.php",
+        destination: "/",
         permanent: true,
       },
     ];
