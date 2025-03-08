@@ -3,5 +3,33 @@
     "src/app/(main)/interview/action.ts": {
       "maxDuration": 60
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "https://www.cvhelper.in/:path*",
+      "destination": "https://cvhelper.in/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*.html",
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*.php",
+      "destination": "/:path*",
+      "permanent": true
+    }
+  ]
 }
+
