@@ -6,11 +6,6 @@
   },
   "redirects": [
     {
-      "source": "https://www.cvhelper.in/:path*",
-      "destination": "https://cvhelper.in/:path*",
-      "permanent": true
-    },
-    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true

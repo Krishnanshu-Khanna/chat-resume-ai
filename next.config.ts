@@ -18,6 +18,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "header", key: "host", value: "www.cvhelper.in" }],
+        destination: "https://cvhelper.in/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
