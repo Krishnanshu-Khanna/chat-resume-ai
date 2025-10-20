@@ -1,10 +1,13 @@
 import { env } from "@/env";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { getUserSubscriptionLevel } from "./subscription";
 import { canUseAITools } from "./permissions";
 import { auth } from "@clerk/nextjs/server";
 
-const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
+const ai = new GoogleGenAI({
+  apiKey: env.GEMINI_API_KEY,
+  apiVersion: "v1",
+});
 
 export default async function generateAIResponse(
   systemMessage: string,
@@ -18,27 +21,23 @@ export default async function generateAIResponse(
     throw new Error("Upgrade your subscription to use this feature");
   }
 
-  const model = genAI.getGenerativeModel({ model: env.GEMINI_MODEL });
-  const result = await model.generateContentStream({
-    contents: [
-      {
-        role: "user",
-        parts: [{ text: `${systemMessage}\n${userMessage || ""}` }],
-      },
-    ],
+  const prompt = `${systemMessage}\n${userMessage || ""}`;
+  const modelName = env.GEMINI_MODEL || "gemini-2.0-flash-001";
+
+  const stream = await ai.models.generateContentStream({
+    model: modelName,
+    contents: prompt,
   });
 
   let responseText = "";
-  for await (const chunk of result.stream) {
-    responseText += chunk.text();
+  for await (const chunk of stream) {
+    responseText += chunk.text;
   }
 
   return responseText;
 }
 
-export async function generateAIResponseWithPrompt(
-  prompt: string,
-) {
+export async function generateAIResponseWithPrompt(prompt: string) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
   const subscriptionLevel = await getUserSubscriptionLevel(userId);
@@ -46,11 +45,13 @@ export async function generateAIResponseWithPrompt(
   if (!canUseAITools(subscriptionLevel)) {
     throw new Error("Upgrade your subscription to use this feature");
   }
-  const model = genAI.getGenerativeModel({ model: env.GEMINI_MODEL });
-  const result = await model.generateContent({
-    contents: [
-      { role: "user", parts: [{ text: `${prompt}\n` }] },
-    ],
+
+  const modelName = env.GEMINI_MODEL || "gemini-2.0-flash-001";
+
+  const result = await ai.models.generateContent({
+    model: modelName,
+    contents: prompt,
   });
-  return result.response.text();
+
+  return result.text;
 }
